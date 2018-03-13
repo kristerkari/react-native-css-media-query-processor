@@ -29,6 +29,14 @@
     "CSS",
     "Media Queries"
   ],
+  "bugs": {
+    "url": "https://github.com/kristerkari/react-native-css-media-query-processor/issues"
+  },
+  "homepage": "https://github.com/kristerkari/react-native-css-media-query-processor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristerkari/react-native-css-media-query-processor.git"
+  },
   "lint-staged": {
     "*.{js,md,json}": [
       "prettier --write",
