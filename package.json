@@ -4,8 +4,9 @@
   "description": "Match style objects containing CSS Media Queries with React Native",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "prebuild": "rimraf dist",
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir dist --ignore src/__tests__,src/__mocks__",
     "precommit": "lint-staged",
     "release": "npmpub",
     "test": "jest"
