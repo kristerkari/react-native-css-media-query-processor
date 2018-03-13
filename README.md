@@ -59,7 +59,7 @@ import styles from "./App.css";
 import transform from "css-to-react-native-transform";
 import { process } from "react-native-css-media-query-processor";
 
-process(transform(styles));
+process(transform(styles, { parseMediaQueries: true }));
 ```
 
 ↓ ↓ ↓ ↓ ↓ ↓
