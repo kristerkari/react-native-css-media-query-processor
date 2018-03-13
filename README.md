@@ -5,7 +5,7 @@
 
 Match style objects containing CSS Media Queries with React Native
 
-> This library is based on [React Native Extended StyleSheet](https://github.com/vitalets/react-native-extended-stylesheet).
+> This library is based on [React Native Extended StyleSheet](https://github.com/vitalets/react-native-extended-stylesheet)'s CSS Media Queries implementation.
 
 ## Installation
 
