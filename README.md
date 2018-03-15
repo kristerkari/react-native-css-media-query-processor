@@ -25,7 +25,7 @@ yarn add react-native-css-media-query-processor --dev
 
 You can use this library together with [css-to-react-native-transform](https://github.com/kristerkari/css-to-react-native-transform) to transform a string of CSS containing media queries to an React Native style object.
 
-Notice that there is no syntax validation for CSS media queries. This is done to ensure that the media query matching is as fast as possible. If you want to validate the media queries, you should do that when they are parsed to style objects (that's what [css-to-react-native-transform](https://github.com/kristerkari/css-to-react-native-transform) does).
+Notice that there is no syntax validation for CSS media queries. This is done to ensure that the media query matching is as fast as possible. If you want to validate syntax for the media queries, you should do that when they are parsed to style objects (that's what [css-to-react-native-transform](https://github.com/kristerkari/css-to-react-native-transform) does).
 
 Given that React Native returns the following dimensions:
 
