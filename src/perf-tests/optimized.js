@@ -1,7 +1,6 @@
-import { Dimensions, Platform } from "react-native";
-import mediaQuery from "css-mediaquery";
 import merge from "deepmerge";
 import memoize from "micro-memoize";
+import mediaQuery from "css-mediaquery";
 
 const PREFIX = "@media";
 
@@ -26,19 +25,8 @@ function filterNonMq(obj) {
     }, {});
 }
 
-const mFilterMq = memoize(filterMq);
-const mFilterNonMq = memoize(filterNonMq);
-
-export function process(obj) {
-  const mqKeys = mFilterMq(obj);
-  let res = mFilterNonMq(obj);
-
-  if (!mqKeys.length) {
-    return res;
-  }
-
-  const matchObject = getMatchObject();
-
+function mergeQueries(res, mqKeys, matchObject) {
+  let newRes = {};
   mqKeys.forEach(key => {
     const mqStr = key.replace(PREFIX, "");
 
@@ -48,20 +36,23 @@ export function process(obj) {
 
     const isMatch = mediaQuery.match(mqStr, matchObject);
     if (isMatch) {
-      res = merge(res, obj[key]);
+      newRes = merge(res, obj[key]);
     }
   });
-
-  return res;
+  return newRes;
 }
 
-function getMatchObject() {
-  const win = Dimensions.get("window");
-  return {
-    width: win.width,
-    height: win.height,
-    orientation: win.width > win.height ? "landscape" : "portrait",
-    "aspect-ratio": win.width / win.height,
-    type: "screen"
-  };
+const mFilterMq = memoize(filterMq);
+const mFilterNonMq = memoize(filterNonMq);
+const mMergeQueries = memoize(mergeQueries);
+
+export function process(obj, matchObject, Platform) {
+  const mqKeys = mFilterMq(obj);
+  const res = mFilterNonMq(obj);
+
+  if (!mqKeys.length) {
+    return res;
+  }
+
+  return mMergeQueries(res, mqKeys, matchObject);
 }

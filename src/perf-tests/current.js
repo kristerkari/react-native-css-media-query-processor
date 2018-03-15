@@ -1,4 +1,3 @@
-import { Dimensions, Platform } from "react-native";
 import mediaQuery from "css-mediaquery";
 import merge from "deepmerge";
 import memoize from "micro-memoize";
@@ -29,15 +28,13 @@ function filterNonMq(obj) {
 const mFilterMq = memoize(filterMq);
 const mFilterNonMq = memoize(filterNonMq);
 
-export function process(obj) {
+export function process(obj, matchObject, Platform) {
   const mqKeys = mFilterMq(obj);
   let res = mFilterNonMq(obj);
 
   if (!mqKeys.length) {
     return res;
   }
-
-  const matchObject = getMatchObject();
 
   mqKeys.forEach(key => {
     const mqStr = key.replace(PREFIX, "");
@@ -53,15 +50,4 @@ export function process(obj) {
   });
 
   return res;
-}
-
-function getMatchObject() {
-  const win = Dimensions.get("window");
-  return {
-    width: win.width,
-    height: win.height,
-    orientation: win.width > win.height ? "landscape" : "portrait",
-    "aspect-ratio": win.width / win.height,
-    type: "screen"
-  };
 }
