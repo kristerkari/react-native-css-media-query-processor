@@ -1,3 +1,5 @@
+import memoize from "micro-memoize";
+
 describe("media queries", () => {
   const rn = {
     Platform: {
@@ -45,6 +47,46 @@ describe("media queries", () => {
         z: 3
       }
     });
+  });
+
+  it("should not modify passed in object", () => {
+    const styles = {
+      "@media (min-width: 50px) and (max-width: 150px)": {
+        a: 1
+      },
+      "@media (min-width: 150px) and (max-width: 200px)": {
+        a: 2
+      }
+    };
+
+    const result = process(styles);
+
+    expect(result).toEqual({ a: 1 });
+    expect(styles).toEqual({
+      "@media (min-width: 50px) and (max-width: 150px)": {
+        a: 1
+      },
+      "@media (min-width: 150px) and (max-width: 200px)": {
+        a: 2
+      }
+    });
+  });
+
+  it("should allow memoized objects to be passed in", () => {
+    const styles = b => {
+      return {
+        a: b,
+        "@media (min-width: 50px) and (max-width: 150px)": {
+          a: 1
+        },
+        "@media (min-width: 150px) and (max-width: 200px)": {
+          a: 2
+        }
+      };
+    };
+
+    const mstyles = memoize(styles);
+    expect(process(mstyles(0))).toEqual({ a: 1 });
   });
 
   it("should process width", () => {
@@ -183,65 +225,6 @@ describe("media queries", () => {
     ).toEqual({ a: 2 });
   });
 
-  it("should support values with extra whitespace", () => {
-    expect(
-      process({
-        " @media android ": {
-          a: 1
-        },
-        " @media  ios  ": {
-          a: 2
-        }
-      })
-    ).toEqual({ a: 2 });
-
-    expect(
-      process({
-        " @media screen and (min-height:   50px) and     (max-height: 150px)  ": {
-          a: 1
-        },
-        "@media   screen and   (min-height:   150px)   and (  max-height: 200px)": {
-          a: 2
-        }
-      })
-    ).toEqual({ a: 1 });
-
-    expect(
-      process({
-        "@media    android": {
-          a: 1
-        },
-        "@media    ios": {
-          a: 2
-        }
-      })
-    ).toEqual({ a: 2 });
-  });
-
-  it("should support media queries with lower and uppercase", () => {
-    expect(
-      process({
-        "@media ANDROID": {
-          a: 1
-        },
-        "@media IOS": {
-          a: 2
-        }
-      })
-    ).toEqual({ a: 2 });
-
-    expect(
-      process({
-        "@MEDIA screen and (MIN-HEIGHT: 50px) and (MAX-HEIGHT: 150px)": {
-          a: 1
-        },
-        "@media screen and (min-height: 150px) and (max-height: 200px)": {
-          a: 2
-        }
-      })
-    ).toEqual({ a: 1 });
-  });
-
   it("should ignore non-matching media queries", () => {
     expect(
       process({
@@ -252,69 +235,38 @@ describe("media queries", () => {
       })
     ).toEqual({ a: 0 });
   });
+});
 
-  it("should throw for invalid types", () => {
-    expect(() =>
-      process({
-        a: 0,
-        "@media screens": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query type "screens"');
-    expect(() =>
-      process({
-        a: 0,
-        "@media sdfgsdfg": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query type "sdfgsdfg"');
+describe("merge", () => {
+  delete require.cache["../index"];
+  const merge = require("deepmerge");
+  it("should merge 2 objects", () => {
+    expect(
+      merge({ a: 1, b: 1, c: { d: 1 } }, { b: 2, c: { d: 3, e: 1 } })
+    ).toEqual({
+      a: 1,
+      b: 2,
+      c: {
+        d: 3,
+        e: 1
+      }
+    });
   });
 
-  it("should throw for invalid features", () => {
-    expect(() =>
-      process({
-        a: 0,
-        "@media (min-heigh: 50px) and (max-height: 150px)": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query feature "min-heigh"');
-    expect(() =>
-      process({
-        a: 0,
-        "@media (orientations: landscape)": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query feature "orientations"');
-  });
+  it("should not modify input", () => {
+    const obj1 = { a: 1, b: 1, c: { d: 1 } };
+    const obj2 = { b: 2, c: { d: 3, e: 1 } };
+    const result = merge(obj1, obj2);
 
-  it("should throw for values without units", () => {
-    expect(() =>
-      process({
-        a: 0,
-        "@media (min-height: 50) and (max-height: 150px)": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query expression "(min-height: 50)"');
-    expect(() =>
-      process({
-        a: 0,
-        "@media (min-height: 50px) and (max-height: 150)": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query expression "(max-height: 150)"');
-    expect(() =>
-      process({
-        a: 0,
-        "@media (min-width)": {
-          a: 1
-        }
-      })
-    ).toThrow('Failed to parse media query expression "(min-width)"');
+    expect(result).toEqual({
+      a: 1,
+      b: 2,
+      c: {
+        d: 3,
+        e: 1
+      }
+    });
+    expect(obj1).toEqual({ a: 1, b: 1, c: { d: 1 } });
+    expect(obj2).toEqual({ b: 2, c: { d: 3, e: 1 } });
   });
 });
