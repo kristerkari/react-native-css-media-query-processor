@@ -5,8 +5,26 @@ var suite2 = new Benchmark.Suite();
 var current = require("./dist/perf-tests/current").process;
 var memoized = require("./dist/perf-tests/memoized").process;
 var optimized = require("./dist/perf-tests/optimized").process;
+var parsed = require("./dist/perf-tests/parsed").process;
 
 var styles = {
+  __mediaQueries: {
+    "@media screen and (max-width: 55rem)": {
+      inverse: false,
+      type: "@media",
+      expressions: [{ modifier: "max", feature: "width", value: "55rem" }]
+    },
+    "@media screen and (max-width: 52.375rem)": {
+      inverse: false,
+      type: "@media",
+      expressions: [{ modifier: "max", feature: "width", value: "52.375rem" }]
+    },
+    "@media screen and (max-width: 32rem)": {
+      inverse: false,
+      type: "@media",
+      expressions: [{ modifier: "max", feature: "width", value: "32rem" }]
+    }
+  },
   header: {
     width: "90%",
     maxWidth: 1104,
@@ -316,6 +334,9 @@ suite
   .add("optimized", function() {
     optimized(styles, portrait, Platform);
   })
+  .add("already parsed queries", function() {
+    parsed(styles, portrait, Platform);
+  })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
@@ -342,6 +363,12 @@ suite2
     optimized(styles, landscape, Platform);
     optimized(styles, portrait, Platform);
     optimized(styles, landscape, Platform);
+  })
+  .add("orientation change: already parsed queries", function() {
+    parsed(styles, portrait, Platform);
+    parsed(styles, landscape, Platform);
+    parsed(styles, portrait, Platform);
+    parsed(styles, landscape, Platform);
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
