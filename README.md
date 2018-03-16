@@ -69,6 +69,7 @@ This is a simplified example of how the CSS gets transformed in to a React Nativ
 ```js
 import styles from "./App.css";
 import transform from "css-to-react-native-transform";
+
 transform(styles, { parseMediaQueries: true });
 ```
 
@@ -109,6 +110,7 @@ transform(styles, { parseMediaQueries: true });
 
 ```js
 import { process } from "react-native-css-media-query-processor";
+
 process(styleObject);
 ```
 
