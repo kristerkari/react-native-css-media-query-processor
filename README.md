@@ -23,9 +23,15 @@ yarn add react-native-css-media-query-processor --dev
 
 ## Usage
 
+This library takes parsed CSS with media queries and matches it during runtime with React Native's current device dimensions and device orientation.
+
+To minimize runtime performance hit, the media queries must be parsed already before calling `process` function. Have a look at the example to see how the parsed syntax looks like.
+
 You can use this library together with [css-to-react-native-transform](https://github.com/kristerkari/css-to-react-native-transform) to transform a string of CSS containing media queries to an React Native style object.
 
 Notice that there is no syntax validation for CSS media queries. This is done to ensure that the media query matching is as fast as possible. If you want to validate syntax for the media queries, you should do that when they are parsed to style objects (that's what [css-to-react-native-transform](https://github.com/kristerkari/css-to-react-native-transform) does).
+
+### Example
 
 Given that React Native returns the following dimensions:
 
@@ -34,6 +40,8 @@ import { Dimensions } from "react-native";
 Dimensions.get("window");
 // => { width: 110, height: 100 }
 ```
+
+This is a simplified example of how the CSS gets transformed in to a React Native compatible style object:
 
 `App.css`:
 
@@ -61,9 +69,47 @@ Dimensions.get("window");
 ```js
 import styles from "./App.css";
 import transform from "css-to-react-native-transform";
-import { process } from "react-native-css-media-query-processor";
+transform(styles, { parseMediaQueries: true });
+```
 
-process(transform(styles, { parseMediaQueries: true }));
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+  __mediaQueries: {
+    "@media (min-width: 50px) and (max-width: 150px)": [
+      {
+        inverse: false,
+        type: "all",
+        expressions: [
+          { modifier: "min", feature: "width", value: "50px" },
+          { modifier: "max", feature: "width", value: "150px" }
+        ]
+      }
+    ]
+  },
+  foo: {
+    color: "red"
+  },
+  bar: {
+    fontSize: 16
+  },
+  "@media (min-width: 50px) and (max-width: 150px)": {
+    foo: {
+      color: "blue"
+    },
+    bar: {
+      fontSize: 32
+    }
+  }
+}
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+import { process } from "react-native-css-media-query-processor";
+process(styleObject);
 ```
 
 ↓ ↓ ↓ ↓ ↓ ↓

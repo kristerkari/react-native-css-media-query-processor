@@ -6,12 +6,22 @@ See the accompanying LICENSE file for terms.
 
 "use strict";
 
-exports.match = matchQuery;
+exports.match = match;
 
 // -----------------------------------------------------------------------------
 
 var RE_LENGTH_UNIT = /(em|rem|px|cm|mm|in|pt|pc)?\s*$/,
   RE_RESOLUTION_UNIT = /(dpi|dpcm|dppx)?\s*$/;
+
+function match(parsed, values) {
+  if (!parsed) {
+    return false;
+  }
+  if (parsed.length === 1) {
+    return matchQuery(parsed[0], values);
+  }
+  return parsed.some(mq => matchQuery(mq, values));
+}
 
 function matchQuery(query, values) {
   var inverse = query.inverse;

@@ -19,6 +19,7 @@
     "src",
     "!**/__tests__",
     "!**/__mocks__",
+    "!**/perf-tests",
     "CHANGELOG.md",
     "README.md"
   ],

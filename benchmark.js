@@ -9,21 +9,27 @@ var parsed = require("./dist/perf-tests/parsed").process;
 
 var styles = {
   __mediaQueries: {
-    "@media screen and (max-width: 55rem)": {
-      inverse: false,
-      type: "@media",
-      expressions: [{ modifier: "max", feature: "width", value: "55rem" }]
-    },
-    "@media screen and (max-width: 52.375rem)": {
-      inverse: false,
-      type: "@media",
-      expressions: [{ modifier: "max", feature: "width", value: "52.375rem" }]
-    },
-    "@media screen and (max-width: 32rem)": {
-      inverse: false,
-      type: "@media",
-      expressions: [{ modifier: "max", feature: "width", value: "32rem" }]
-    }
+    "@media screen and (max-width: 55rem)": [
+      {
+        inverse: false,
+        type: "@media",
+        expressions: [{ modifier: "max", feature: "width", value: "55rem" }]
+      }
+    ],
+    "@media screen and (max-width: 52.375rem)": [
+      {
+        inverse: false,
+        type: "@media",
+        expressions: [{ modifier: "max", feature: "width", value: "52.375rem" }]
+      }
+    ],
+    "@media screen and (max-width: 32rem)": [
+      {
+        inverse: false,
+        type: "@media",
+        expressions: [{ modifier: "max", feature: "width", value: "32rem" }]
+      }
+    ]
   },
   header: {
     width: "90%",
