@@ -384,6 +384,69 @@ describe("media queries", () => {
     ).toEqual({ a: 2 });
   });
 
+  it("should process mixed types", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media ios": [
+            {
+              inverse: false,
+              type: "ios",
+              expressions: []
+            }
+          ],
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media screen and (min-width: 50px)": [
+            {
+              inverse: false,
+              type: "screen",
+              expressions: [
+                { modifier: "min", feature: "width", value: "50px" }
+              ]
+            }
+          ],
+          "@media all and (min-width: 50px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "width", value: "50px" }
+              ]
+            }
+          ],
+          "@media (orientation: landscape)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [{ feature: "orientation", value: "landscape" }]
+            }
+          ]
+        },
+        "@media ios": {
+          a: 1
+        },
+        "@media android": {
+          a: 2
+        },
+        "@media screen and (min-width: 50px)": {
+          b: 3
+        },
+        "@media all and (min-width: 50px)": {
+          c: 4
+        },
+        "@media (orientation: landscape)": {
+          d: 5
+        }
+      })
+    ).toEqual({ a: 1, b: 3, c: 4, d: 5 });
+  });
+
   it("should support OR queries", () => {
     expect(
       process({
