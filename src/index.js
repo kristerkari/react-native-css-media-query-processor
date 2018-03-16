@@ -1,5 +1,5 @@
 import { Dimensions, Platform } from "react-native";
-import mediaQuery from "css-mediaquery";
+import mediaQuery from "./mediaquery.js";
 import merge from "deepmerge";
 import memoize from "micro-memoize";
 
@@ -11,6 +11,15 @@ function isObject(obj) {
 
 function isMediaQuery(str) {
   return typeof str === "string" && str.indexOf(PREFIX) === 0;
+}
+
+function omit(obj, omitKey) {
+  return Object.keys(obj).reduce((result, key) => {
+    if (key !== omitKey) {
+      result[key] = obj[key];
+    }
+    return result;
+  }, {});
 }
 
 function filterMq(obj) {
@@ -28,6 +37,7 @@ function filterNonMq(obj) {
 
 const mFilterMq = memoize(filterMq);
 const mFilterNonMq = memoize(filterNonMq);
+const mOmit = memoize(omit);
 
 export function process(obj) {
   const mqKeys = mFilterMq(obj);
@@ -40,19 +50,19 @@ export function process(obj) {
   const matchObject = getMatchObject();
 
   mqKeys.forEach(key => {
-    const mqStr = key.replace(PREFIX, "");
-
     if (/^@media\s+(ios|android)/i.test(key)) {
       matchObject.type = Platform.OS;
+    } else {
+      matchObject.type = "screen";
     }
 
-    const isMatch = mediaQuery.match(mqStr, matchObject);
+    const isMatch = mediaQuery.match(obj.__mediaQueries[key], matchObject);
     if (isMatch) {
       res = merge(res, obj[key]);
     }
   });
 
-  return res;
+  return mOmit(res, "__mediaQueries");
 }
 
 function getMatchObject() {

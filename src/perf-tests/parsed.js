@@ -1,4 +1,4 @@
-import mediaQuery from "./mq.js";
+import mediaQuery from "../mediaquery.js";
 import merge from "deepmerge";
 import memoize from "micro-memoize";
 
@@ -10,6 +10,15 @@ function isObject(obj) {
 
 function isMediaQuery(str) {
   return typeof str === "string" && str.indexOf(PREFIX) === 0;
+}
+
+function omit(obj, omitKey) {
+  return Object.keys(obj).reduce((result, key) => {
+    if (key !== omitKey) {
+      result[key] = obj[key];
+    }
+    return result;
+  }, {});
 }
 
 function filterMq(obj) {
@@ -27,6 +36,7 @@ function filterNonMq(obj) {
 
 const mFilterMq = memoize(filterMq);
 const mFilterNonMq = memoize(filterNonMq);
+const mOmit = memoize(omit);
 
 export function process(obj, matchObject, Platform) {
   const mqKeys = mFilterMq(obj);
@@ -39,6 +49,8 @@ export function process(obj, matchObject, Platform) {
   mqKeys.forEach(key => {
     if (/^@media\s+(ios|android)/i.test(key)) {
       matchObject.type = Platform.OS;
+    } else {
+      matchObject.type = "screen";
     }
 
     const isMatch = mediaQuery.match(obj.__mediaQueries[key], matchObject);
@@ -47,5 +59,5 @@ export function process(obj, matchObject, Platform) {
     }
   });
 
-  return res;
+  return mOmit(res, "__mediaQueries");
 }

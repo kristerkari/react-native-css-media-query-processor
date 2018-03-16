@@ -17,6 +17,25 @@ describe("media queries", () => {
   const process = require("../index").process;
   it("should extract and apply media queries", () => {
     const obj = {
+      __mediaQueries: {
+        "@media (min-width: 50px) and (min-height: 100px)": [
+          {
+            inverse: false,
+            type: "all",
+            expressions: [
+              { modifier: "min", feature: "width", value: "50px" },
+              { modifier: "min", feature: "height", value: "100px" }
+            ]
+          }
+        ],
+        "@media ios": [
+          {
+            inverse: false,
+            type: "ios",
+            expressions: []
+          }
+        ]
+      },
       a: 1,
       b: 2,
       e: {
@@ -51,6 +70,28 @@ describe("media queries", () => {
 
   it("should not modify passed in object", () => {
     const styles = {
+      __mediaQueries: {
+        "@media (min-width: 50px) and (max-width: 150px)": [
+          {
+            inverse: false,
+            type: "all",
+            expressions: [
+              { modifier: "min", feature: "width", value: "50px" },
+              { modifier: "max", feature: "width", value: "150px" }
+            ]
+          }
+        ],
+        "@media (min-width: 150px) and (max-width: 200px)": [
+          {
+            inverse: false,
+            type: "all",
+            expressions: [
+              { modifier: "min", feature: "width", value: "150px" },
+              { modifier: "max", feature: "width", value: "200px" }
+            ]
+          }
+        ]
+      },
       "@media (min-width: 50px) and (max-width: 150px)": {
         a: 1
       },
@@ -63,6 +104,28 @@ describe("media queries", () => {
 
     expect(result).toEqual({ a: 1 });
     expect(styles).toEqual({
+      __mediaQueries: {
+        "@media (min-width: 50px) and (max-width: 150px)": [
+          {
+            inverse: false,
+            type: "all",
+            expressions: [
+              { modifier: "min", feature: "width", value: "50px" },
+              { modifier: "max", feature: "width", value: "150px" }
+            ]
+          }
+        ],
+        "@media (min-width: 150px) and (max-width: 200px)": [
+          {
+            inverse: false,
+            type: "all",
+            expressions: [
+              { modifier: "min", feature: "width", value: "150px" },
+              { modifier: "max", feature: "width", value: "200px" }
+            ]
+          }
+        ]
+      },
       "@media (min-width: 50px) and (max-width: 150px)": {
         a: 1
       },
@@ -75,6 +138,28 @@ describe("media queries", () => {
   it("should allow memoized objects to be passed in", () => {
     const styles = b => {
       return {
+        __mediaQueries: {
+          "@media (min-width: 50px) and (max-width: 150px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "width", value: "50px" },
+                { modifier: "max", feature: "width", value: "150px" }
+              ]
+            }
+          ],
+          "@media (min-width: 150px) and (max-width: 200px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "width", value: "150px" },
+                { modifier: "max", feature: "width", value: "200px" }
+              ]
+            }
+          ]
+        },
         a: b,
         "@media (min-width: 50px) and (max-width: 150px)": {
           a: 1
@@ -92,6 +177,28 @@ describe("media queries", () => {
   it("should process width", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media (min-width: 50px) and (max-width: 150px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "width", value: "50px" },
+                { modifier: "max", feature: "width", value: "150px" }
+              ]
+            }
+          ],
+          "@media (min-width: 150px) and (max-width: 200px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "width", value: "150px" },
+                { modifier: "max", feature: "width", value: "200px" }
+              ]
+            }
+          ]
+        },
         "@media (min-width: 50px) and (max-width: 150px)": {
           a: 1
         },
@@ -105,6 +212,28 @@ describe("media queries", () => {
   it("should process height", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media (min-height: 50px) and (max-height: 150px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "50px" },
+                { modifier: "max", feature: "height", value: "150px" }
+              ]
+            }
+          ],
+          "@media (min-height: 150px) and (max-height: 200px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "150px" },
+                { modifier: "max", feature: "height", value: "200px" }
+              ]
+            }
+          ]
+        },
         "@media (min-height: 50px) and (max-height: 150px)": {
           a: 1
         },
@@ -118,6 +247,28 @@ describe("media queries", () => {
   it("should support rem", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media (min-height: 3.125rem) and (max-height: 9.375rem)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "3.125rem" },
+                { modifier: "max", feature: "height", value: "9.375rem" }
+              ]
+            }
+          ],
+          "@media (min-height: 9.375rem) and (max-height: 12.5rem)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "9.375rem" },
+                { modifier: "max", feature: "height", value: "12.5rem" }
+              ]
+            }
+          ]
+        },
         "@media (min-height: 3.125rem) and (max-height: 9.375rem)": {
           a: 1
         },
@@ -128,6 +279,28 @@ describe("media queries", () => {
     ).toEqual({ a: 1 });
     expect(
       process({
+        __mediaQueries: {
+          "@media screen and (min-height: 9.375rem) and (max-height: 12.5rem)": [
+            {
+              inverse: false,
+              type: "screen",
+              expressions: [
+                { modifier: "min", feature: "height", value: "9.375rem" },
+                { modifier: "max", feature: "height", value: "12.5rem" }
+              ]
+            }
+          ],
+          "@media screen and (min-height: 3.125rem) and (max-height: 9.375rem)": [
+            {
+              inverse: false,
+              type: "screen",
+              expressions: [
+                { modifier: "min", feature: "height", value: "3.125rem" },
+                { modifier: "max", feature: "height", value: "9.375rem" }
+              ]
+            }
+          ]
+        },
         a: 0,
         "@media screen and (min-height: 9.375rem) and (max-height: 12.5rem)": {
           a: 1
@@ -142,6 +315,28 @@ describe("media queries", () => {
   it("should support screen type", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media screen and (min-height: 50px) and (max-height: 150px)": [
+            {
+              inverse: false,
+              type: "screen",
+              expressions: [
+                { modifier: "min", feature: "height", value: "50px" },
+                { modifier: "max", feature: "height", value: "150px" }
+              ]
+            }
+          ],
+          "@media screen and (min-height: 150px) and (max-height: 200px)": [
+            {
+              inverse: false,
+              type: "screen",
+              expressions: [
+                { modifier: "min", feature: "height", value: "150px" },
+                { modifier: "max", feature: "height", value: "200px" }
+              ]
+            }
+          ]
+        },
         a: 0,
         "@media screen and (min-height: 50px) and (max-height: 150px)": {
           a: 1
@@ -156,6 +351,28 @@ describe("media queries", () => {
   it("should support all type", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media all and (min-height: 150px) and (max-height: 200px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "150px" },
+                { modifier: "max", feature: "height", value: "200px" }
+              ]
+            }
+          ],
+          "@media all and (min-height: 50px) and (max-height: 150px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "50px" },
+                { modifier: "max", feature: "height", value: "150px" }
+              ]
+            }
+          ]
+        },
         a: 0,
         "@media all and (min-height: 150px) and (max-height: 200px)": {
           a: 1
@@ -170,6 +387,40 @@ describe("media queries", () => {
   it("should support OR queries", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media all and (min-height: 150px), (max-height: 200px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "150px" }
+              ]
+            },
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "max", feature: "height", value: "200px" }
+              ]
+            }
+          ],
+          "@media all and (min-height: 200px), (max-height: 150px)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "min", feature: "height", value: "200px" }
+              ]
+            },
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                { modifier: "max", feature: "height", value: "150px" }
+              ]
+            }
+          ]
+        },
         a: 0,
         "@media all and (min-height: 150px), (max-height: 200px)": {
           a: 1
@@ -181,6 +432,32 @@ describe("media queries", () => {
     ).toEqual({ a: 2 });
     expect(
       process({
+        __mediaQueries: {
+          "@media (orientation: portrait), (orientation: landscape)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                {
+                  modifier: undefined,
+                  feature: "orientation",
+                  value: "portrait"
+                }
+              ]
+            },
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                {
+                  modifier: undefined,
+                  feature: "orientation",
+                  value: "landscape"
+                }
+              ]
+            }
+          ]
+        },
         a: 1,
         "@media (orientation: portrait), (orientation: landscape)": {
           a: 2
@@ -192,6 +469,34 @@ describe("media queries", () => {
   it("should process orientation", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media (orientation: landscape)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                {
+                  modifier: undefined,
+                  feature: "orientation",
+                  value: "landscape"
+                }
+              ]
+            }
+          ],
+          "@media (orientation: portrait)": [
+            {
+              inverse: false,
+              type: "all",
+              expressions: [
+                {
+                  modifier: undefined,
+                  feature: "orientation",
+                  value: "portrait"
+                }
+              ]
+            }
+          ]
+        },
         "@media (orientation: landscape)": {
           a: 1
         },
@@ -205,6 +510,22 @@ describe("media queries", () => {
   it("should process type", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media ios": [
+            {
+              inverse: false,
+              type: "ios",
+              expressions: []
+            }
+          ],
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ]
+        },
         "@media ios": {
           a: 1
         },
@@ -215,6 +536,22 @@ describe("media queries", () => {
     ).toEqual({ a: 1 });
     expect(
       process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media ios": [
+            {
+              inverse: false,
+              type: "ios",
+              expressions: []
+            }
+          ]
+        },
         "@media android": {
           a: 1
         },
@@ -228,6 +565,17 @@ describe("media queries", () => {
   it("should ignore non-matching media queries", () => {
     expect(
       process({
+        __mediaQueries: {
+          "@media print and (min-width: 50px)": [
+            {
+              inverse: false,
+              type: "print",
+              expressions: [
+                { modifier: "min", feature: "width", value: "50px" }
+              ]
+            }
+          ]
+        },
         a: 0,
         "@media print and (min-width: 50px)": {
           a: 1
