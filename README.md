@@ -48,6 +48,7 @@ This is a simplified example of how the CSS gets transformed in to a React Nativ
 ```css
 .foo {
   color: red;
+  margin-top: 1px;
 }
 
 .bar {
@@ -90,7 +91,8 @@ transform(styles, { parseMediaQueries: true });
     ]
   },
   foo: {
-    color: "red"
+    color: "red",
+    marginTop: 1
   },
   bar: {
     fontSize: 16
@@ -119,7 +121,8 @@ process(styleObject);
 ```js
 {
   foo: {
-    color: "blue"
+    color: "blue",
+    marginTop: 1
   },
   bar: {
     fontSize: 32
