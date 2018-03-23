@@ -1,11 +1,12 @@
 var Benchmark = require("benchmark");
-var suite = new Benchmark.Suite();
-var suite2 = new Benchmark.Suite();
+var once = new Benchmark.Suite();
+var fourTimes = new Benchmark.Suite();
+var eightTimes = new Benchmark.Suite();
+var onceRequire = new Benchmark.Suite();
+var fourTimesRequire = new Benchmark.Suite();
+var eightTimesRequire = new Benchmark.Suite();
 
-var current = require("./dist/perf-tests/current").process;
-var memoized = require("./dist/perf-tests/memoized").process;
-var optimized = require("./dist/perf-tests/optimized").process;
-var parsed = require("./dist/perf-tests/parsed").process;
+var process = require("./dist/perf-tests/current").process;
 
 var styles = {
   __mediaQueries: {
@@ -616,65 +617,192 @@ var Platform = {
   OS: "ios"
 };
 
-suite
-  .add("current", function() {
-    current(styles, portrait, Platform);
+console.log("-----------------------------------------");
+
+once
+  .add("1 call", function() {
+    process(styles, portrait, Platform);
   })
-  .add("memoized", function() {
-    memoized(styles, portrait, Platform);
-  })
-  .add("optimized", function() {
-    optimized(styles, portrait, Platform);
-  })
-  .add("already parsed queries", function() {
-    parsed(styles, portrait, Platform);
-  })
-  .add("already parsed queries, return early", function() {
-    parsed(stylesWithoutMediaQueries, portrait, Platform);
+  .add("1 call (return early)", function() {
+    process(stylesWithoutMediaQueries, portrait, Platform);
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
   .on("complete", function() {
     console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
   })
   .run({ async: false });
 
-suite2
-  .add("orientation change: current", function() {
-    current(styles, portrait, Platform);
-    current(styles, landscape, Platform);
-    current(styles, portrait, Platform);
-    current(styles, landscape, Platform);
+onceRequire
+  .add("1 call (require)", function() {
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
   })
-  .add("orientation change: memoized", function() {
-    memoized(styles, portrait, Platform);
-    memoized(styles, landscape, Platform);
-    memoized(styles, portrait, Platform);
-    memoized(styles, landscape, Platform);
-  })
-  .add("orientation change: optimized", function() {
-    optimized(styles, portrait, Platform);
-    optimized(styles, landscape, Platform);
-    optimized(styles, portrait, Platform);
-    optimized(styles, landscape, Platform);
-  })
-  .add("orientation change: already parsed queries", function() {
-    parsed(styles, portrait, Platform);
-    parsed(styles, landscape, Platform);
-    parsed(styles, portrait, Platform);
-    parsed(styles, landscape, Platform);
-  })
-  .add("orientation change: already parsed queries, return early", function() {
-    parsed(stylesWithoutMediaQueries, portrait, Platform);
-    parsed(stylesWithoutMediaQueries, landscape, Platform);
-    parsed(stylesWithoutMediaQueries, portrait, Platform);
-    parsed(stylesWithoutMediaQueries, landscape, Platform);
+  .add("1 call (require, return early)", function() {
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
   .on("complete", function() {
     console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
+  })
+  .run({ async: false });
+
+fourTimes
+  .add("4 calls (orientation change)", function() {
+    process(styles, portrait, Platform);
+    process(styles, landscape, Platform);
+    process(styles, portrait, Platform);
+    process(styles, landscape, Platform);
+  })
+  .add("4 calls (orientation change, return early)", function() {
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, landscape, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, landscape, Platform);
+  })
+  .on("cycle", function(event) {
+    console.log(String(event.target));
+  })
+  .on("complete", function() {
+    console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
+  })
+  .run({ async: false });
+
+fourTimesRequire
+  .add("4 calls (orientation change, require)", function() {
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, landscape, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, landscape, Platform);
+  })
+  .add("4 calls (orientation change, require, return early)", function() {
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      landscape,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      landscape,
+      Platform
+    );
+  })
+  .on("cycle", function(event) {
+    console.log(String(event.target));
+  })
+  .on("complete", function() {
+    console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
+  })
+  .run({ async: false });
+
+eightTimes
+  .add("8 calls (orientation change)", function() {
+    process(styles, portrait, Platform);
+    process(styles, landscape, Platform);
+    process(styles, portrait, Platform);
+    process(styles, landscape, Platform);
+    process(styles, portrait, Platform);
+    process(styles, landscape, Platform);
+    process(styles, portrait, Platform);
+    process(styles, landscape, Platform);
+  })
+  .add("8 calls (orientation change, return early)", function() {
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, landscape, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, landscape, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, landscape, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, landscape, Platform);
+  })
+  .on("cycle", function(event) {
+    console.log(String(event.target));
+  })
+  .on("complete", function() {
+    console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
+  })
+  .run({ async: false });
+
+eightTimesRequire
+  .add("8 calls (orientation change, require)", function() {
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, landscape, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, landscape, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, landscape, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, landscape, Platform);
+  })
+  .add("8 calls (orientation change, require, return early)", function() {
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      landscape,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      landscape,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      landscape,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      landscape,
+      Platform
+    );
+  })
+  .on("cycle", function(event) {
+    console.log(String(event.target));
+  })
+  .on("complete", function() {
+    console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
   })
   .run({ async: false });
