@@ -1,5 +1,7 @@
 var Benchmark = require("benchmark");
 var once = new Benchmark.Suite();
+var eightTimesTheSame = new Benchmark.Suite();
+var eightTimesTheSameRequire = new Benchmark.Suite();
 var fourTimes = new Benchmark.Suite();
 var eightTimes = new Benchmark.Suite();
 var onceRequire = new Benchmark.Suite();
@@ -703,6 +705,98 @@ fourTimesRequire
     require("./dist/perf-tests/current").process(
       stylesWithoutMediaQueries,
       landscape,
+      Platform
+    );
+  })
+  .on("cycle", function(event) {
+    console.log(String(event.target));
+  })
+  .on("complete", function() {
+    console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
+  })
+  .run({ async: false });
+
+eightTimesTheSame
+  .add("8 calls (the same parameters)", function() {
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+    process(styles, portrait, Platform);
+  })
+  .add("8 calls (the same parameters, return early)", function() {
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+    process(stylesWithoutMediaQueries, portrait, Platform);
+  })
+  .on("cycle", function(event) {
+    console.log(String(event.target));
+  })
+  .on("complete", function() {
+    console.log("Fastest is " + this.filter("fastest").map("name"));
+    console.log("-----------------------------------------");
+  })
+  .run({ async: false });
+
+eightTimesTheSameRequire
+  .add("8 calls (the same parameters, require)", function() {
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+    require("./dist/perf-tests/current").process(styles, portrait, Platform);
+  })
+  .add("8 calls (the same parameters, require, return early)", function() {
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
+      Platform
+    );
+    require("./dist/perf-tests/current").process(
+      stylesWithoutMediaQueries,
+      portrait,
       Platform
     );
   })
