@@ -40,6 +40,12 @@ const mFilterNonMq = memoize(filterNonMq);
 const mOmit = memoize(omit);
 
 export function process(obj) {
+  const hasParsedMQs = "__mediaQueries" in obj;
+
+  if (!hasParsedMQs) {
+    return;
+  }
+
   const mqKeys = mFilterMq(obj);
   let res = mFilterNonMq(obj);
 
