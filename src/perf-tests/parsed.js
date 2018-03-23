@@ -42,7 +42,7 @@ export function process(obj, matchObject, Platform) {
   const hasParsedMQs = "__mediaQueries" in obj;
 
   if (!hasParsedMQs) {
-    return;
+    return obj;
   }
 
   const mqKeys = mFilterMq(obj);

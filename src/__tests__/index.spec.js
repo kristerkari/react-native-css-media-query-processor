@@ -68,6 +68,10 @@ describe("media queries", () => {
     });
   });
 
+  it("should return the same object if there are no parsed media queries", () => {
+    expect(process({ a: 1 })).toEqual({ a: 1 });
+  });
+
   it("should not modify passed in object", () => {
     const styles = {
       __mediaQueries: {
