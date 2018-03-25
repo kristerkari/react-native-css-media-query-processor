@@ -46,7 +46,6 @@
     ]
   },
   "dependencies": {
-    "css-mediaquery": "^0.1.2",
     "deepmerge": "^2.1.0",
     "micro-memoize": "^2.0.0"
   },
@@ -70,5 +69,8 @@
     "semi": true,
     "singleQuote": false,
     "trailingComma": "none"
+  },
+  "babel": {
+    "presets": ["es2015"]
   }
 }
