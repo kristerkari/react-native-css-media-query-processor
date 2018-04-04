@@ -58,6 +58,7 @@
     "babel-jest": "^22.4.1",
     "babel-preset-es2015": "^6.24.1",
     "benchmark": "^2.1.4",
+    "coveralls": "^3.0.0",
     "husky": "^0.14.3",
     "jest": "^22.4.2",
     "lint-staged": "^7.0.0",
@@ -71,6 +72,27 @@
     "trailingComma": "none"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*.js",
+      "!src/mediaquery.js"
+    ],
+    "coverageDirectory": "./.coverage/",
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    }
   }
 }
