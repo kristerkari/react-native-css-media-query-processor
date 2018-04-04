@@ -4,10 +4,6 @@ import memoize from "micro-memoize";
 
 const PREFIX = "@media";
 
-function isObject(obj) {
-  return typeof obj === "object" && obj !== null;
-}
-
 function isMediaQuery(str) {
   return typeof str === "string" && str.indexOf(PREFIX) === 0;
 }
@@ -47,10 +43,6 @@ export function process(obj, matchObject, Platform) {
 
   const mqKeys = mFilterMq(obj);
   let res = mFilterNonMq(obj);
-
-  if (!mqKeys.length) {
-    return res;
-  }
 
   mqKeys.forEach(key => {
     if (/^@media\s+(ios|android)/i.test(key)) {
