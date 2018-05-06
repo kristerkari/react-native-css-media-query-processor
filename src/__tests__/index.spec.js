@@ -629,6 +629,66 @@ describe("media queries", () => {
     ).toEqual({ a: 2 });
   });
 
+  it("should process media query with not operator and type", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media not print": [
+            {
+              inverse: true,
+              type: "print",
+              expressions: []
+            }
+          ],
+          "@media print": [
+            {
+              inverse: false,
+              type: "print",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media not print": {
+          a: 2
+        },
+        "@media print": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 2 });
+  });
+
+  it("should process media query with not operator and platform", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media not android": [
+            {
+              inverse: true,
+              type: "android",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media android": {
+          a: 2
+        },
+        "@media not android": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 3 });
+  });
+
   it("should ignore non-matching media queries", () => {
     expect(
       process({

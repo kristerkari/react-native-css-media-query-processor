@@ -35,6 +35,10 @@ function matchQuery(query, values) {
     return false;
   }
 
+  if (query.expressions.length === 0) {
+    return typeMatch || inverse;
+  }
+
   var expressionsMatch = query.expressions.every(function(expression) {
     var feature = expression.feature,
       modifier = expression.modifier,
