@@ -94,7 +94,7 @@ function matchQuery(query, values) {
     }
   });
 
-  return (expressionsMatch && !inverse) || (!expressionsMatch && inverse);
+  return expressionsMatch || inverse;
 }
 
 // -- Utilities ----------------------------------------------------------------
