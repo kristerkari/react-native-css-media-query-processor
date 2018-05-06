@@ -629,7 +629,7 @@ describe("media queries", () => {
     ).toEqual({ a: 2 });
   });
 
-  it("should process media query with not operator and type", () => {
+  it("should process media query with NOT operator and type", () => {
     expect(
       process({
         __mediaQueries: {
@@ -739,10 +739,10 @@ describe("media queries", () => {
     expect(
       process({
         __mediaQueries: {
-          "@media not print, (orientation: portrait)": [
+          "@media not ios, (orientation: portrait)": [
             {
               inverse: true,
-              type: "print",
+              type: "ios",
               expressions: []
             },
             {
@@ -787,10 +787,10 @@ describe("media queries", () => {
               expressions: []
             }
           ],
-          "@media not android and (orientation: landscape)": [
+          "@media not ios and (orientation: landscape)": [
             {
               inverse: true,
-              type: "android",
+              type: "ios",
               expressions: [
                 {
                   feature: "orientation",
