@@ -78,8 +78,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/*.js",
-      "!src/mediaquery.js"
+      "src/*.js"
     ],
     "coverageDirectory": "./.coverage/",
     "coverageReporters": [
