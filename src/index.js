@@ -47,7 +47,7 @@ export function process(obj) {
   const matchObject = getMatchObject();
 
   mqKeys.forEach(key => {
-    if (/^@media\s+(ios|android)/i.test(key)) {
+    if (/^@media\s+(not\s+)?(ios|android)/i.test(key)) {
       matchObject.type = Platform.OS;
     } else {
       matchObject.type = "screen";

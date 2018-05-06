@@ -629,6 +629,285 @@ describe("media queries", () => {
     ).toEqual({ a: 2 });
   });
 
+  it("should process media query with NOT operator and type", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media not print": [
+            {
+              inverse: true,
+              type: "print",
+              expressions: []
+            }
+          ],
+          "@media print": [
+            {
+              inverse: false,
+              type: "print",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media not print": {
+          a: 2
+        },
+        "@media print": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 2 });
+  });
+
+  it("should process media query with NOT and OR operators and type", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media not print, (orientation: landscape)": [
+            {
+              inverse: true,
+              type: "print",
+              expressions: []
+            },
+            {
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "landscape"
+                }
+              ],
+              inverse: false,
+              type: "all"
+            }
+          ],
+          "@media print": [
+            {
+              inverse: false,
+              type: "print",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media not print, (orientation: landscape)": {
+          a: 2
+        },
+        "@media print": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 2 });
+    expect(
+      process({
+        __mediaQueries: {
+          "@media not ios, (orientation: landscape)": [
+            {
+              inverse: true,
+              type: "ios",
+              expressions: []
+            },
+            {
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "landscape"
+                }
+              ],
+              inverse: false,
+              type: "all"
+            }
+          ],
+          "@media print": [
+            {
+              inverse: false,
+              type: "print",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media not ios, (orientation: landscape)": {
+          a: 2
+        },
+        "@media print": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 2 });
+    expect(
+      process({
+        __mediaQueries: {
+          "@media not ios, (orientation: portrait)": [
+            {
+              inverse: true,
+              type: "ios",
+              expressions: []
+            },
+            {
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "portrait"
+                }
+              ],
+              inverse: false,
+              type: "all"
+            }
+          ],
+          "@media print": [
+            {
+              inverse: false,
+              type: "print",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media not ios, (orientation: portrait)": {
+          a: 2
+        },
+        "@media print": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 1 });
+  });
+
+  it("should process media query with NOT and AND operators and platform", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media not ios and (orientation: landscape)": [
+            {
+              inverse: true,
+              type: "ios",
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "landscape"
+                }
+              ]
+            }
+          ]
+        },
+        a: 1,
+        "@media android": {
+          a: 2
+        },
+        "@media not ios and (orientation: landscape)": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 1 });
+    expect(
+      process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media not ios and (orientation: portrait)": [
+            {
+              inverse: true,
+              type: "ios",
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "portrait"
+                }
+              ]
+            }
+          ]
+        },
+        a: 1,
+        "@media android": {
+          a: 2
+        },
+        "@media not ios and (orientation: portrait)": {
+          a: 4
+        }
+      })
+    ).toEqual({ a: 4 });
+    expect(
+      process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media not android and (orientation: portrait)": [
+            {
+              inverse: true,
+              type: "android",
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "portrait"
+                }
+              ]
+            }
+          ]
+        },
+        a: 1,
+        "@media android": {
+          a: 2
+        },
+        "@media not android and (orientation: portrait)": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 3 });
+  });
+
+  it("should process media query with not operator and platform", () => {
+    expect(
+      process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
+          "@media not android": [
+            {
+              inverse: true,
+              type: "android",
+              expressions: []
+            }
+          ]
+        },
+        a: 1,
+        "@media android": {
+          a: 2
+        },
+        "@media not android": {
+          a: 3
+        }
+      })
+    ).toEqual({ a: 3 });
+  });
+
   it("should ignore non-matching media queries", () => {
     expect(
       process({
