@@ -30,13 +30,11 @@ function matchQuery(query, values) {
   // equal for a match.
   var typeMatch = query.type === "all" || values.type === query.type;
 
-  // Quit early when `type` doesn't match, but take "not" into account.
-  if ((typeMatch && inverse) || !(typeMatch || inverse)) {
-    return false;
-  }
-
   if (query.expressions.length === 0) {
-    return typeMatch || inverse;
+    // Quit early when `type` doesn't match, but take "not" into account.
+    if ((typeMatch && inverse) || !(typeMatch || inverse)) {
+      return false;
+    }
   }
 
   var expressionsMatch = query.expressions.every(function(expression) {
@@ -94,7 +92,10 @@ function matchQuery(query, values) {
     }
   });
 
-  return expressionsMatch || inverse;
+  if (inverse) {
+    return !(typeMatch && expressionsMatch);
+  }
+  return typeMatch && expressionsMatch;
 }
 
 // -- Utilities ----------------------------------------------------------------

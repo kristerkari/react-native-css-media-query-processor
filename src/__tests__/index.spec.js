@@ -820,6 +820,39 @@ describe("media queries", () => {
               expressions: []
             }
           ],
+          "@media not ios and (orientation: portrait)": [
+            {
+              inverse: true,
+              type: "ios",
+              expressions: [
+                {
+                  feature: "orientation",
+                  modifier: undefined,
+                  value: "portrait"
+                }
+              ]
+            }
+          ]
+        },
+        a: 1,
+        "@media android": {
+          a: 2
+        },
+        "@media not ios and (orientation: portrait)": {
+          a: 4
+        }
+      })
+    ).toEqual({ a: 4 });
+    expect(
+      process({
+        __mediaQueries: {
+          "@media android": [
+            {
+              inverse: false,
+              type: "android",
+              expressions: []
+            }
+          ],
           "@media not android and (orientation: portrait)": [
             {
               inverse: true,
