@@ -92,10 +92,13 @@ function matchQuery(query, values) {
     }
   });
 
+  const isMatch = typeMatch && expressionsMatch;
+
   if (inverse) {
-    return !(typeMatch && expressionsMatch);
+    return !isMatch;
   }
-  return typeMatch && expressionsMatch;
+
+  return isMatch;
 }
 
 // -- Utilities ----------------------------------------------------------------
