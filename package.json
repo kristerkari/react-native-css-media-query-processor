@@ -71,11 +71,6 @@
     "singleQuote": false,
     "trailingComma": "none"
   },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/*.js"
