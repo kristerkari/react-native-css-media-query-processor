@@ -4,6 +4,7 @@
   "description": "Match style objects containing CSS Media Queries with React Native",
   "main": "dist/index.js",
   "scripts": {
+    "size": "size-limit",
     "prepublish": "npm run build",
     "prebuild": "rimraf dist",
     "build": "babel src --out-dir dist --ignore src/__tests__,src/__mocks__",
@@ -64,13 +65,20 @@
     "lint-staged": "^7.0.4",
     "npmpub": "^3.1.0",
     "prettier": "^1.12.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "size-limit": "^0.18.3"
   },
   "prettier": {
     "semi": true,
     "singleQuote": false,
     "trailingComma": "none"
   },
+  "size-limit": [
+    {
+      "limit": "3 KB",
+      "path": "src/index.js"
+    }
+  ],
   "jest": {
     "collectCoverageFrom": [
       "src/*.js"
