@@ -625,9 +625,6 @@ once
   .add("1 call", function() {
     process(styles, portrait, Platform);
   })
-  .add("1 call (return early)", function() {
-    process(stylesWithoutMediaQueries, portrait, Platform);
-  })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
@@ -640,13 +637,6 @@ once
 onceRequire
   .add("1 call (require)", function() {
     require("./dist/perf-tests/current").process(styles, portrait, Platform);
-  })
-  .add("1 call (require, return early)", function() {
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
@@ -664,12 +654,6 @@ fourTimes
     process(styles, portrait, Platform);
     process(styles, landscape, Platform);
   })
-  .add("4 calls (orientation change, return early)", function() {
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, landscape, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, landscape, Platform);
-  })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
@@ -685,28 +669,6 @@ fourTimesRequire
     require("./dist/perf-tests/current").process(styles, landscape, Platform);
     require("./dist/perf-tests/current").process(styles, portrait, Platform);
     require("./dist/perf-tests/current").process(styles, landscape, Platform);
-  })
-  .add("4 calls (orientation change, require, return early)", function() {
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      landscape,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      landscape,
-      Platform
-    );
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
@@ -728,16 +690,6 @@ eightTimesTheSame
     process(styles, portrait, Platform);
     process(styles, portrait, Platform);
   })
-  .add("8 calls (the same parameters, return early)", function() {
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-  })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
@@ -757,48 +709,6 @@ eightTimesTheSameRequire
     require("./dist/perf-tests/current").process(styles, portrait, Platform);
     require("./dist/perf-tests/current").process(styles, portrait, Platform);
     require("./dist/perf-tests/current").process(styles, portrait, Platform);
-  })
-  .add("8 calls (the same parameters, require, return early)", function() {
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
@@ -820,16 +730,6 @@ eightTimes
     process(styles, portrait, Platform);
     process(styles, landscape, Platform);
   })
-  .add("8 calls (orientation change, return early)", function() {
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, landscape, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, landscape, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, landscape, Platform);
-    process(stylesWithoutMediaQueries, portrait, Platform);
-    process(stylesWithoutMediaQueries, landscape, Platform);
-  })
   .on("cycle", function(event) {
     console.log(String(event.target));
   })
@@ -849,48 +749,6 @@ eightTimesRequire
     require("./dist/perf-tests/current").process(styles, landscape, Platform);
     require("./dist/perf-tests/current").process(styles, portrait, Platform);
     require("./dist/perf-tests/current").process(styles, landscape, Platform);
-  })
-  .add("8 calls (orientation change, require, return early)", function() {
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      landscape,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      landscape,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      landscape,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      portrait,
-      Platform
-    );
-    require("./dist/perf-tests/current").process(
-      stylesWithoutMediaQueries,
-      landscape,
-      Platform
-    );
   })
   .on("cycle", function(event) {
     console.log(String(event.target));
