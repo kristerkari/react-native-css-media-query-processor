@@ -1,5 +1,6 @@
 # React Native CSS Media Query processor
 
+![Platform - Android and iOS](https://img.shields.io/badge/platform-Android%20%7C%20iOS-blue.svg)
 [![NPM version](http://img.shields.io/npm/v/react-native-css-media-query-processor.svg)](https://www.npmjs.org/package/react-native-css-media-query-processor)
 [![Build Status](https://travis-ci.org/kristerkari/react-native-css-media-query-processor.svg?branch=master)](https://travis-ci.org/kristerkari/react-native-css-media-query-processor)
 [![Build status](https://ci.appveyor.com/api/projects/status/1itowtpn7a51rc5x/branch/master?svg=true)](https://ci.appveyor.com/project/kristerkari/react-native-css-media-query-processor/branch/master)
@@ -115,7 +116,7 @@ transform(styles, { parseMediaQueries: true });
 ```js
 import { process } from "react-native-css-media-query-processor";
 
-process(styleObject);
+process(styleObject, matchObject);
 ```
 
 ↓ ↓ ↓ ↓ ↓ ↓
