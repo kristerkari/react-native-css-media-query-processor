@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/kristerkari/react-native-css-media-query-processor.svg?branch=master)](https://travis-ci.org/kristerkari/react-native-css-media-query-processor)
 [![Build status](https://ci.appveyor.com/api/projects/status/1itowtpn7a51rc5x/branch/master?svg=true)](https://ci.appveyor.com/project/kristerkari/react-native-css-media-query-processor/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/kristerkari/react-native-css-media-query-processor/badge.svg?branch=master)](https://coveralls.io/github/kristerkari/react-native-css-media-query-processor?branch=master)
+![Size](https://img.shields.io/bundlephobia/minzip/react-native-css-media-query-processor.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
 
 Match style objects containing CSS Media Queries with React Native
