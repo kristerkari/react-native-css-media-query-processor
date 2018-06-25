@@ -8,15 +8,6 @@ function isMediaQuery(str) {
   return typeof str === "string" && str.indexOf(PREFIX) === 0;
 }
 
-function omit(obj, omitKey) {
-  return Object.keys(obj).reduce((result, key) => {
-    if (key !== omitKey) {
-      result[key] = obj[key];
-    }
-    return result;
-  }, {});
-}
-
 function filterMq(obj) {
   return Object.keys(obj).filter(key => isMediaQuery(key));
 }
@@ -32,20 +23,13 @@ function filterNonMq(obj) {
 
 const mFilterMq = memoize(filterMq);
 const mFilterNonMq = memoize(filterNonMq);
-const mOmit = memoize(omit);
 
 export function process(obj, matchObject, Platform) {
-  const hasParsedMQs = "__mediaQueries" in obj;
-
-  if (!hasParsedMQs) {
-    return obj;
-  }
-
   const mqKeys = mFilterMq(obj);
   let res = mFilterNonMq(obj);
 
   mqKeys.forEach(key => {
-    if (/^@media\s+(ios|android)/i.test(key)) {
+    if (/^@media\s+(not\s+)?(ios|android)/i.test(key)) {
       matchObject.type = Platform.OS;
     } else {
       matchObject.type = "screen";
@@ -57,5 +41,5 @@ export function process(obj, matchObject, Platform) {
     }
   });
 
-  return mOmit(res, "__mediaQueries");
+  return res;
 }
