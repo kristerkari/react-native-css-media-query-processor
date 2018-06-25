@@ -9,16 +9,16 @@ cache:
 matrix:
   include:
     - node_js: '9'
-      script: npm run test -- --runInBand
+      script: npm run test -- --runInBand && npm run size
       env: CI=tests 9
     - node_js: '9'
-      script: npm test -- --runInBand --coverage
+      script: npm test -- --runInBand --coverage && npm run size
       env: CI=coverage
     - node_js: '8'
-      script: npm run test -- --runInBand
+      script: npm run test -- --runInBand && npm run size
       env: CI=tests 8
     - node_js: '6'
-      script: npm run test -- --runInBand
+      script: npm run test -- --runInBand && npm run size
       env: CI=tests 6
 before_install:
   - npm install -g npm@latest
