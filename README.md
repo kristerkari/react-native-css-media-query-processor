@@ -80,7 +80,7 @@ transform(styles, { parseMediaQueries: true });
 ↓ ↓ ↓ ↓ ↓ ↓
 
 ```js
-{
+const styleObject = {
   __mediaQueries: {
     "@media (min-width: 50px) and (max-width: 150px)": [
       {
@@ -108,13 +108,21 @@ transform(styles, { parseMediaQueries: true });
       fontSize: 32
     }
   }
-}
+};
 ```
 
 ↓ ↓ ↓ ↓ ↓ ↓
 
 ```js
 import { process } from "react-native-css-media-query-processor";
+
+const matchObject = {
+  width: 110,
+  height: 100,
+  orientation: "landscape",
+  aspect-ratio: 1.1,
+  type: "screen"
+}
 
 process(styleObject, matchObject);
 ```
