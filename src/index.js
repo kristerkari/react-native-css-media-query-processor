@@ -14,12 +14,12 @@ function filterMq(obj) {
 }
 
 function filterNonMq(obj) {
-  return Object.keys(obj)
-    .filter(key => !isMediaQuery(key))
-    .reduce((out, key) => {
+  return Object.keys(obj).reduce((out, key) => {
+    if (!isMediaQuery(key) && key !== "__mediaQueries") {
       out[key] = obj[key];
-      return out;
-    }, {});
+    }
+    return out;
+  }, {});
 }
 
 const mFilterMq = memoize(filterMq);
