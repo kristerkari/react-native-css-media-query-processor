@@ -1,14 +1,5 @@
 import memoize from "micro-memoize";
 
-function omit(obj, omitKey) {
-  return Object.keys(obj).reduce((result, key) => {
-    if (key !== omitKey) {
-      result[key] = obj[key];
-    }
-    return result;
-  }, {});
-}
-
 const win = {
   width: 110,
   height: 100
@@ -72,7 +63,7 @@ describe("media queries", () => {
         d: 5
       }
     };
-    const result = omit(process(obj, matchObject), "__mediaQueries");
+    const result = process(obj, matchObject);
     expect(result).toEqual({
       a: 2,
       b: 2,
@@ -118,7 +109,7 @@ describe("media queries", () => {
       }
     };
 
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
 
     expect(result).toEqual({ a: 1 });
     expect(styles).toEqual({
@@ -189,7 +180,7 @@ describe("media queries", () => {
     };
 
     const mstyles = memoize(styles);
-    const result = omit(process(mstyles(0), matchObject), "__mediaQueries");
+    const result = process(mstyles(0), matchObject);
     expect(result).toEqual({ a: 1 });
   });
 
@@ -224,7 +215,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 1 });
   });
 
@@ -259,7 +250,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 1 });
   });
 
@@ -294,7 +285,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result1 = omit(process(styles1, matchObject), "__mediaQueries");
+    const result1 = process(styles1, matchObject);
     expect(result1).toEqual({ a: 1 });
 
     const styles2 = {
@@ -329,7 +320,7 @@ describe("media queries", () => {
       }
     };
 
-    const result2 = omit(process(styles2, matchObject), "__mediaQueries");
+    const result2 = process(styles2, matchObject);
     expect(result2).toEqual({ a: 2 });
   });
 
@@ -365,7 +356,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 1 });
   });
 
@@ -401,7 +392,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 2 });
   });
 
@@ -460,7 +451,7 @@ describe("media queries", () => {
         d: 5
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 1, b: 3, c: 4, d: 5 });
   });
 
@@ -508,7 +499,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result1 = omit(process(styles1, matchObject), "__mediaQueries");
+    const result1 = process(styles1, matchObject);
     expect(result1).toEqual({ a: 2 });
 
     const styles2 = {
@@ -543,7 +534,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result2 = omit(process(styles2, matchObject), "__mediaQueries");
+    const result2 = process(styles2, matchObject);
     expect(result2).toEqual({ a: 2 });
   });
 
@@ -584,7 +575,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 1 });
   });
 
@@ -613,7 +604,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result1 = omit(process(styles1, matchObject), "__mediaQueries");
+    const result1 = process(styles1, matchObject);
     expect(result1).toEqual({ a: 1 });
 
     const styles2 = {
@@ -640,7 +631,7 @@ describe("media queries", () => {
         a: 2
       }
     };
-    const result2 = omit(process(styles2, matchObject), "__mediaQueries");
+    const result2 = process(styles2, matchObject);
     expect(result2).toEqual({ a: 2 });
   });
 
@@ -670,7 +661,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 2 });
   });
 
@@ -711,7 +702,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result1 = omit(process(styles1, matchObject), "__mediaQueries");
+    const result1 = process(styles1, matchObject);
     expect(result1).toEqual({ a: 2 });
 
     const styles2 = {
@@ -750,7 +741,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result2 = omit(process(styles2, matchObject), "__mediaQueries");
+    const result2 = process(styles2, matchObject);
     expect(result2).toEqual({ a: 2 });
 
     const styles3 = {
@@ -789,7 +780,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result3 = omit(process(styles3, matchObject), "__mediaQueries");
+    const result3 = process(styles3, matchObject);
     expect(result3).toEqual({ a: 1 });
   });
 
@@ -825,7 +816,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result1 = omit(process(styles1, matchObject), "__mediaQueries");
+    const result1 = process(styles1, matchObject);
 
     expect(result1).toEqual({ a: 1 });
 
@@ -860,7 +851,7 @@ describe("media queries", () => {
         a: 4
       }
     };
-    const result2 = omit(process(styles2, matchObject), "__mediaQueries");
+    const result2 = process(styles2, matchObject);
     expect(result2).toEqual({ a: 4 });
 
     const styles3 = {
@@ -894,7 +885,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result3 = omit(process(styles3, matchObject), "__mediaQueries");
+    const result3 = process(styles3, matchObject);
 
     expect(result3).toEqual({ a: 3 });
   });
@@ -925,7 +916,7 @@ describe("media queries", () => {
         a: 3
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 3 });
   });
 
@@ -945,7 +936,7 @@ describe("media queries", () => {
         a: 1
       }
     };
-    const result = omit(process(styles, matchObject), "__mediaQueries");
+    const result = process(styles, matchObject);
     expect(result).toEqual({ a: 0 });
   });
 });
