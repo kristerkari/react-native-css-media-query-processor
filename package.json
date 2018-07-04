@@ -1,6 +1,6 @@
 {
   "name": "react-native-css-media-query-processor",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "description": "Match style objects containing CSS Media Queries with React Native",
   "main": "dist/index.js",
   "scripts": {
