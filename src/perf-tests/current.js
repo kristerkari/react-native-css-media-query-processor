@@ -29,7 +29,7 @@ export function process(obj, matchObject, Platform) {
   let res = mFilterNonMq(obj);
 
   mqKeys.forEach(key => {
-    if (/^@media\s+(not\s+)?(ios|android)/i.test(key)) {
+    if (/^@media\s+(not\s+)?(ios|android|dom|macos|web|windows)/i.test(key)) {
       matchObject.type = Platform.OS;
     } else {
       matchObject.type = "screen";

@@ -1,4 +1,4 @@
-import { Dimensions, Platform } from "react-native";
+import { Platform } from "react-native";
 import mediaQuery from "./mediaquery.js";
 import merge from "deepmerge";
 import memoize from "micro-memoize";
@@ -30,7 +30,7 @@ export function process(obj, matchObject) {
   let res = mFilterNonMq(obj);
 
   mqKeys.forEach(key => {
-    if (/^@media\s+(not\s+)?(ios|android)/i.test(key)) {
+    if (/^@media\s+(not\s+)?(ios|android|dom|macos|web|windows)/i.test(key)) {
       matchObject.type = Platform.OS;
     } else {
       matchObject.type = "screen";
