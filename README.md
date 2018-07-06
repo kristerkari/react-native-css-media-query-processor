@@ -115,14 +115,16 @@ const styleObject = {
 
 ```js
 import { process } from "react-native-css-media-query-processor";
+import { Dimensions } from "react-native";
 
-const matchObject = {
-  width: 110,
-  height: 100,
-  orientation: "landscape",
-  aspect-ratio: 1.1,
+const win = Dimensions.get("window");
+const matchObj = {
+  width: win.width,
+  height: win.height,
+  orientation: win.width > win.height ? "landscape" : "portrait",
+  "aspect-ratio": win.width / win.height,
   type: "screen"
-}
+};
 
 process(styleObject, matchObject);
 ```
