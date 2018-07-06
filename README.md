@@ -118,7 +118,7 @@ import { process } from "react-native-css-media-query-processor";
 import { Dimensions } from "react-native";
 
 const win = Dimensions.get("window");
-const matchObj = {
+const matchObject = {
   width: win.width,
   height: win.height,
   orientation: win.width > win.height ? "landscape" : "portrait",
