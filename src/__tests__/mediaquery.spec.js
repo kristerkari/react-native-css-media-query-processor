@@ -97,10 +97,44 @@ describe("match", () => {
         )
       ).toBe(false);
     });
+
+    it("Width: should return true for a correct match with type", function() {
+      expect(
+        mediaQuery.match(
+          [
+            {
+              inverse: false,
+              type: "screen",
+              expressions: [
+                { modifier: "min", feature: "width", value: "48em" }
+              ]
+            }
+          ],
+          { width: "48em", type: "screen" }
+        )
+      ).toBe(true);
+    });
   });
 
   describe("Length Check", function() {
     describe("Width", function() {
+      it("should return true for a width equal to a min-width", function() {
+        expect(
+          mediaQuery.match(
+            [
+              {
+                inverse: false,
+                type: "all",
+                expressions: [
+                  { modifier: "min", feature: "width", value: "48em" }
+                ]
+              }
+            ],
+            { width: "48em" }
+          )
+        ).toBe(true);
+      });
+
       it("should return true for a width higher than a min-width", function() {
         expect(
           mediaQuery.match(
@@ -131,6 +165,40 @@ describe("match", () => {
               }
             ],
             { width: "20em" }
+          )
+        ).toBe(false);
+      });
+
+      it("should return true for a width lower than a max-width", function() {
+        expect(
+          mediaQuery.match(
+            [
+              {
+                expressions: [
+                  { feature: "width", modifier: "max", value: "48em" }
+                ],
+                inverse: false,
+                type: "all"
+              }
+            ],
+            { width: "47.5em" }
+          )
+        ).toBe(true);
+      });
+
+      it("should return false for a width higher than a max-width", function() {
+        expect(
+          mediaQuery.match(
+            [
+              {
+                expressions: [
+                  { feature: "width", modifier: "max", value: "48em" }
+                ],
+                inverse: false,
+                type: "all"
+              }
+            ],
+            { width: "48.5em" }
           )
         ).toBe(false);
       });
