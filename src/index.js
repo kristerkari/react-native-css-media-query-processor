@@ -1,7 +1,7 @@
-import { Platform } from "react-native";
-import mediaQuery from "./mediaquery.js";
 import merge from "deepmerge";
 import memoize from "micro-memoize";
+import { Platform } from "react-native";
+import mediaQuery from "./mediaquery.js";
 
 const PREFIX = "@media";
 
