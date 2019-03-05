@@ -145,5 +145,5 @@ process(styleObject, matchObject);
 
 ## Dependencies
 
-- [deepmerge](https://github.com/KyleAMathews/deepmerge) - A library for deep (recursive) merging of Javascript objects (UMD bundle is 567B minified+gzipped)
+- [deepmerge](https://github.com/KyleAMathews/deepmerge) - A library for deep (recursive) merging of Javascript objects (UMD bundle is 593B minified+gzipped)
 - [micro-memoize](https://github.com/planttheidea/micro-memoize) - A tiny, crazy fast memoization library for the 95% use-case
